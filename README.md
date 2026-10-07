@@ -4,6 +4,8 @@ A browser maze-escape game. Descend into an endless labyrinth: find the hidden
 key, unlock the far door, and get out before the clock (or the ghosts) stop you.
 Every level gets harder.
 
+**LIVE: https://ohmymatts.github.io/labirinto/** (GitHub Pages)
+
 No build step, no dependencies, no server required — pure HTML/CSS/JS.
 
 ## Play
