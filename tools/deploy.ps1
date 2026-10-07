@@ -78,8 +78,13 @@ else { throw "repo create failed (HTTP $($cr.code)): $($cr.body)" }
 if (-not (git remote | Select-String '^origin$')) {
   git remote add origin "https://github.com/$login/$RepoName.git"
 }
+# WinPS 5.1 converts native stderr into terminating errors under Stop - so we
+# continue through it here and gate on $LASTEXITCODE instead
+$ErrorActionPreference = 'Continue'
 $pushOut = git -c credential.helper= -c "http.extraheader=AUTHORIZATION: basic $basic" push -u origin HEAD 2>&1 | Out-String
-if ($LASTEXITCODE -ne 0) { throw "push failed: $pushOut" }
+$pushExit = $LASTEXITCODE
+$ErrorActionPreference = 'Stop'
+if ($pushExit -ne 0) { throw "push failed (exit $pushExit): $pushOut" }
 Write-Host 'pushed to origin'
 
 # ---- enable GitHub Pages (main / site root) ----
