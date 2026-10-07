@@ -1,0 +1,64 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no">
+<meta name="theme-color" content="#05060f">
+<meta name="description" content="Descend into an endless labyrinth: find the hidden key, unlock the far door, dodge the ghosts. Every level gets darker, bigger, faster.">
+<title>LABIRINTO — find the key, escape the maze</title>
+<link rel="manifest" href="manifest.webmanifest">
+<link rel="apple-touch-icon" href="icons/icon-192.png">
+<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 64 64'%3E%3Ctext y='54' font-size='52'%3E%F0%9F%94%91%3C/text%3E%3C/svg%3E">
+<link rel="stylesheet" href="styles.css">
+</head>
+<body>
+<div id="app">
+  <header id="hud">
+    <div class="stat">LEVEL <b id="hud-level">1</b></div>
+    <div class="stat"><span id="hud-key" class="key-ico dim">🔑</span></div>
+    <div class="stat">LIVES <b id="hud-lives">♥♥♥</b></div>
+    <div class="stat grow time-wrap">
+      <span class="lbl">TIME</span>
+      <div id="timebar"><i id="timefill"></i></div>
+      <b id="hud-time">0:00</b>
+    </div>
+    <div class="stat">BEST <b id="hud-best">–</b></div>
+    <div class="stat btns">
+      <button id="btn-pause" title="Pause (P)">⏸</button>
+      <button id="btn-mute" title="Mute (M)">🔊</button>
+    </div>
+  </header>
+
+  <div id="stage">
+    <canvas id="game"></canvas>
+    <div id="toast"></div>
+    <div id="banner"></div>
+    <div id="overlay"></div>
+  </div>
+
+  <div id="dpad">
+    <button data-dir="up"    class="d-up">▲</button>
+    <button data-dir="left"  class="d-left">◀</button>
+    <button data-dir="right" class="d-right">▶</button>
+    <button data-dir="down"  class="d-down">▼</button>
+  </div>
+
+  <footer id="hint">WASD / ARROWS to move &nbsp;·&nbsp; P pause &nbsp;·&nbsp; M mute</footer>
+</div>
+
+<script src="js/maze.js"></script>
+<script src="js/game.js"></script>
+<script>
+  // offline support (PWA): register the service worker in secure contexts
+  (function () {
+    var secure = location.protocol === 'https:' ||
+      location.hostname === 'localhost' || location.hostname === '127.0.0.1';
+    if (secure && 'serviceWorker' in navigator) {
+      window.addEventListener('load', function () {
+        navigator.serviceWorker.register('./sw.js').catch(function () { });
+      });
+    }
+  })();
+</script>
+</body>
+</html>

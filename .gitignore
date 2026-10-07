@@ -1,0 +1,6 @@
+node_modules/
+.npm-cache/
+.chrome-profile/
+test/screens/
+test/chrome-pids.txt
+npm-debug.log*
