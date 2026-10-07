@@ -25,8 +25,8 @@ if ($changed -gt 0) {
 $helper = 'C:\Program Files\Git\mingw64\bin\git-credential-manager.exe'
 if (-not (Test-Path $helper)) { throw 'git-credential-manager.exe not found' }
 $credLines = ("protocol=https`nhost=github.com`n`n" | & $helper get 2>$null | Out-String)
-$username = ($credLines -split "`n" | Select-String '^username=').Line -replace '^username=', ''
-$password = ($credLines -split "`n" | Select-String '^password=').Line -replace '^password=', ''
+$username = (($credLines -split '`n' | Select-String '^username=').Line -replace '^username=', '').Trim()
+$password = (($credLines -split '`n' | Select-String '^password=').Line -replace '^password=', '').Trim()
 if (-not $password) { throw 'no stored GitHub credential; run "gh auth login" or push manually once' }
 Write-Host "git credential: stored (user: $username, token hidden)"
 $basic = [Convert]::ToBase64String([Text.Encoding]::UTF8.GetBytes("${username}:${password}"))
